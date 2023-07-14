@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer utilities {
+    .menuItem {
+        @apply inline mr-7 cursor-pointer;
+    }
+}

@@ -1,11 +1,13 @@
 import './globals.css'
-import { Poppins } from 'next/font/google'
+import NextAuthProvider from "./providers";
+import ReduxProvider from "@/lib/redux/Provider";
 
-const poppins = Poppins({
-  subsets: ['latin'],
-  style: ['italic', 'normal'],
-  weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900']
-})
+// import { Inter } from 'next/font/google'
+import ThemeProvider from '@/app/ThemeProvider'
+import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
+
+// const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
   title: 'Create Next App',
@@ -14,11 +16,22 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body className={poppins.className}>
-        <div className='bg-black h-screen text-white'>
-          <div className='container mx-auto'>{children}</div>
-        </div></body>
+    <html lang="en" suppressHydrationWarning>
+      <body>
+        <ReduxProvider>
+          <NextAuthProvider>
+            <div className='bg-bg-l dark:bg-bg-d text-textp-l dark:text-textp-d'>
+              <ThemeProvider>
+                <div className='container mx-auto'>
+                  <Navbar />
+                  <main>{children}</main>
+                  <Footer />
+                </div>
+              </ThemeProvider>
+            </div>
+          </NextAuthProvider>
+        </ReduxProvider>
+      </body>
     </html>
   )
 }
