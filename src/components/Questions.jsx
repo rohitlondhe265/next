@@ -12,8 +12,9 @@ export default function Questions({ onChecked }) {
 
     const [{ isLoading, apiData, serverError }] = useFetchQuestion();
 
+    const [clicked, setClicked] = useState(undefined)
     const [givenans, setGivenans] = useState(undefined)
-    const { trace } = useSelector(state => state.questions);
+    const { trace, status } = useSelector(state => state.questions);
     const result = useSelector(state => state.result.result);
 
     // Current Question
@@ -34,13 +35,18 @@ export default function Questions({ onChecked }) {
     const handleShuffle = (options) => {
         return options.sort(() => Math.random() - 0.5);
     };
-    console.log(options)
 
     useEffect(() => {
         dispatch(updateResult({ trace, givenans }));
     }, [givenans])
 
+    useEffect(() => {
+        setClicked(undefined);
+    }, [trace])
+
+
     function onSelect(res) {
+        setClicked(res)
         onChecked(res)
         setGivenans(res)
         dispatch(updateResult({ trace, givenans }))
@@ -50,25 +56,27 @@ export default function Questions({ onChecked }) {
     if (serverError) return (<h1>Server Error</h1>)
 
     return (
-        <div className="w-full flex flex-col items-center">
-            <h2 className='text-light'>{questions?.question}</h2>
+        <div className="w-full flex flex-col items-center mt-6 space-y-6">
+            <h2 className='text-muted text-lg font-semibold'>
+                <span className='text-primary'>{trace + 1} </span>{questions?.question}</h2>
 
-            <ul className='flex flex-col' key={questions?._id}>
+            <ul className='space-y-3' key={questions?._id}>
                 {
-                    options?.map((q, i) => (
-                        <li key={i}>
-                            <input
-                                type="radio"
-                                value={false}
-                                name="options"
-                                id={`q${i}-option`}
-                                onChange={() => onSelect(q)}
-                            />
-
-                            <label className='mt-px inline-block pl-[0.15rem] hover:cursor-pointer' htmlFor={`q${i}-option`}>{q}</label>
-                            <div className={`check ${result[trace] == q ? 'bg-green-600' : 'bg-red-500'}`}></div>
-                        </li>
-                    ))
+                    options?.map((q, i) => {
+                        return (
+                            <li key={i} className={`flex gap-3 text-lg text-base bg-skin-on-fill shadow-md rounded-md p-3 `}>
+                                <input
+                                    type="radio"
+                                    value={false}
+                                    className='hidden'
+                                    name="options"
+                                    id={`q${i}-option`}
+                                    onChange={() => onSelect(q)}
+                                />
+                                <label className={`flex items-center gap-3 cursor-pointer before:h-6 before:w-6 before:border-2 before:border-base before:rounded-full before:mr-3 ${result[trace] == q || clicked == q ? 'before:bg-green-600 before:border-none' : ''} `} htmlFor={`q${i}-option`}>{q}</label>
+                            </li>
+                        )
+                    })
                 }
             </ul>
         </div>

@@ -2,8 +2,60 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer utilities {
-    .menuItem {
-        @apply inline mr-7 cursor-pointer;
-    }
+@layer base {
+  :root {
+    --color-text-base: 255, 255, 255;
+    --color-text-muted: 199, 210, 254;
+    --color-text-inverted: 79, 70, 229;
+    --color-fill: 67, 56, 202;
+    --color-button-accent: 255, 255, 255;
+    --color-button-accent-hover: 238, 242, 255;
+    --color-button-muted: 99, 102, 241;
+  }
+
+  .light {
+    --color-base: 0,0,0;
+    --color-muted:  38,38,38;
+
+    --color-fill: 255, 255, 255;
+    --color-on-fill: 230,230,230;
+
+    --color-primary: 13, 116, 231;
+    --color-secondary:13, 116, 231;
+    --color-success:13, 116, 231;
+    --color-error:13, 116, 231;
+  }
+
+  .dark {
+    --color-base: 255, 255, 255;
+    --color-muted:  242, 242, 242;
+
+    --color-fill: 36, 41, 45;
+    --color-on-fill: 43, 49, 55;
+
+    --color-primary: 13, 116, 231;
+    --color-secondary: 255,255,255;
+    --color-success: 13, 116, 231;
+    --color-error: 13, 116, 231;
+  }
+
+  .theme-swiss {
+    --color-text-base: 255, 255, 255;
+    --color-text-muted: 254, 202, 202;
+    --color-text-inverted: 220, 38, 38;
+    --color-fill: 185, 28, 28;
+    --color-button-accent: 255, 255, 255;
+    --color-button-accent-hover: 254, 242, 242;
+    --color-button-muted: 239, 68, 68;
+  }
+
+  .theme-neon {
+    --color-text-base: 17, 24, 2;
+    --color-text-muted: 47, 67, 6;
+    --color-text-inverted: 235, 250, 204;
+    --color-fill: 179, 255, 23;
+    --color-button-accent: 36, 52, 3;
+    --color-button-accent-hover: 55, 79, 5;
+    --color-button-muted: 212, 255, 122;
+  }
 }

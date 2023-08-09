@@ -7,6 +7,7 @@ import { getServerData } from "./helper/helper";
 /** redux actions */
 import * as Action from '../redux/question_reducer'
 import { apiUrl } from "../database/constants";
+import questions from "../database/data/questions";
 
 /** fetch question hook to fetch api data and set value to store */
 export const useFetchQuestion = () => {
@@ -23,7 +24,7 @@ export const useFetchQuestion = () => {
             try {
 
                 // const questions = await (await axios.get(url)).data
-                const questions = await getServerData(url, (data) => data)
+                // const questions = await getServerData(url, (data) => data)
 
                 let answers = [];
                 questions.map((q) => {
@@ -73,6 +74,15 @@ export const MoveNextQuestion = () => async (dispatch) => {
 export const MovePrevQuestion = () => async (dispatch) => {
     try {
         dispatch(Action.movePrevAction()); /** decrease trace by 1 */
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+/** MoveAction Dispatch function */
+export const MoveToQuestion = (q) => async (dispatch) => {
+    try {
+        dispatch(Action.moveAction(q)); /** update trace to given number */
     } catch (error) {
         console.log(error)
     }

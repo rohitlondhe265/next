@@ -1,6 +1,5 @@
 'use client'
 
-import Button from '@/components/Button';
 import ResultTable from '@/components/ResultTable';
 import { useDispatch, useSelector } from 'react-redux';
 import { attempts_Number, earnPoints_Number, flagResult } from '@/lib/hooks/helper/helper';
@@ -9,7 +8,7 @@ import { attempts_Number, earnPoints_Number, flagResult } from '@/lib/hooks/help
 import { resetAllAction } from '@/lib/redux/question_reducer';
 import { resetResultAction } from '@/lib/redux/result_reducer';
 import { usePublishResult } from '@/lib/hooks/setResult';
-import Link from 'next/link';
+import BtnPrimary from '@/components/BtnPrimary';
 
 export default function Result() {
 
@@ -40,14 +39,16 @@ export default function Result() {
     // });
 
     function onRestart() {
+        console.log("Restart")
         dispatch(resetAllAction())
         dispatch(resetResultAction())
     }
 
     return (
-        <div className='block relative my-9 mx-auto w-10/12 p-24'>
+        <div className='relative mx-auto max-w-3xl min-h-screen'>
 
-            <h1 className="text-5xl p-4 text-center font-bold from-purple-600 via-pink-600 to-blue-600 bg-gradient-to-r bg-clip-text text-transparent">A Guide to Adding Gradients</h1>
+            {/* <h1 className="text-5xl p-4 text-center font-bold from-purple-600 via-pink-600 to-blue-600 bg-gradient-to-r bg-clip-text text-transparent">A Guide to Adding Gradients</h1> */}
+            <h1 className="text-4xl md:text-5xl text-center p-4 font-bold">Examination Result</h1>
 
             <div className='result flex flex-col justify-center border border-red-300 p-6'>
                 <div className='flex justify-between'>
@@ -74,12 +75,13 @@ export default function Result() {
                     <span>Performance</span>
                     <span className='bold'>{flag ? "Passed" : "Failed"}</span>
                 </div>
+
+                <div className='mt-6 mx-auto'>
+                    <BtnPrimary href="/examination" onClick={onRestart}>Restart</BtnPrimary></div>
             </div>
 
-            {/* <Button href="/" onClick={onRestart}>Restart</Button> */}
-            <Link href="/examination" onClick={onRestart} className='bg-primary p-3 rounded-lg'>Restart</Link>
 
-            <div className="">
+            <div className="my-9">
                 <ResultTable></ResultTable>
             </div>
         </div>

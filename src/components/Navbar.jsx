@@ -1,8 +1,8 @@
 'use client'
 
 import React, { useState } from 'react'
-import Button from './Button';
-import { ListBulletIcon, LockClosedIcon } from '@heroicons/react/24/solid';
+import Button from './BtnPrimary';
+import { Bars3CenterLeftIcon, XMarkIcon } from '@heroicons/react/24/solid';
 import ThemeButton from './ThemeButton';
 
 export default function Navbar() {
@@ -15,12 +15,12 @@ export default function Navbar() {
   ];
   const [open, setOpen] = useState(false);
 
-  return (<>
+  return (
     <div className='shadow-md w-full mb-3'>
-      <div className='flex items-center justify-between bg-white py-2 md:px-9 px-6'>
+      <div className='flex items-center justify-between lg:px-9 px-6 py-2 lg:py-3 bg-skin-on-fill'>
 
-        <div className='font-bold text-2xl cursor-pointer flex items-center text-gray-800'>
-          <span className='text-3xl text-indigo-600 mr-1 pt-2'>
+        <div className='font-bold text-2xl cursor-pointer flex items-center '>
+          <span className='text-3xl text-indigo-600 mr-1 text-center'>
             MAHA
           </span>
           Exams
@@ -28,15 +28,15 @@ export default function Navbar() {
 
         <ThemeButton />
 
-        <div onClick={() => setOpen(!open)} className='w-9 space-y-2 cursor-pointer md:hidden'>
-          {open ? <LockClosedIcon /> : <ListBulletIcon />}
+        <div onClick={() => setOpen(!open)} className='w-9 space-y-2 cursor-pointer lg:hidden'>
+          {open ? <XMarkIcon /> : <Bars3CenterLeftIcon />}
         </div>
 
-        <ul className={`md:flex md:items-center md:pb-0 pb-12 absolute md:static bg-gray-300 h-fit left-0 w-full md:w-auto md:pl-0 pl-9 transition-all duration-500 ease-in ${open ? 'top-16 ' : 'top-[-490px]'}`}>
+        <ul className={`lg:flex lg:items-center lg:pb-0 pb-12 absolute lg:static h-fit left-0 w-full lg:w-auto lg:pl-0 pl-9 transition-all duration-500 ease-in bg-skin-on-fill ${open ? 'top-16 ' : 'top-[-490px]'}`}>
           {
             Links.map((link) => (
-              <li key={link.name} className='md:ml-8 text-xl md:my-0 my-7'>
-                <p href="/" className='text-gray-800 hover:text-gray-400 duration-500'>{link.name}</p>
+              <li key={link.name} className='lg:ml-8 text-xl lg:my-0 my-7'>
+                <p href="/" className='duration-500'>{link.name}</p>
               </li>
             ))
           }
@@ -45,5 +45,5 @@ export default function Navbar() {
 
       </div>
     </div>
-  </>)
+  )
 }

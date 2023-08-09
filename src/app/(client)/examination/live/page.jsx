@@ -1,12 +1,15 @@
 import Sidebar from './Sidebar';
 import Content from './Content';
+import { Suspense } from 'react';
 
 export default function Page() {
 
     return (
-        <div className="flex flex-no-wrap min-h-screen my-6">
+        <div className="flex flex-no-wrap my-6 md:gap-6">
             <Sidebar />
-            <Content />
+            <Suspense fallback={<div>Loading questions ...</div>}>
+                <Content />
+            </Suspense>
         </div>
     )
 }

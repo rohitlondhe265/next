@@ -32,6 +32,7 @@ export default function Content() {
 
         /** reset the value of the checked variable */
         setGivenans(undefined)
+        
     }
 
     /** Prev button event handler */
@@ -53,26 +54,20 @@ export default function Content() {
     }
 
     return (
-        <div className="md:w-4/5 w-full px-1 md:px-6">
-            <div className="w-full h-full rounded border-dashed border-2 border-gray-300">
+            <div className="w-full h-full rounded border-dashed border-2 border-gray-300 p-2 md:p-6">
 
-                {queue ? (
-                    <main>
-                        <div className="w-full flex justify-between uppercase">
-                            <Timer seconds={600} />
-                        </div>
-                        <Questions onChecked={onChecked} />
-                    </main>
-                ) : (
-                    <span className="loading loading-spinner text-primary">loading ...</span>
-                )}
+                <main>
+                    <div className="w-full flex justify-between uppercase">
+                        <Timer seconds={600} />
+                    </div>
+                    <Questions onChecked={onChecked} />
+                </main>
 
-                <div className='flex justify-between'>
-                    {trace > 0 ? <button className='bg-gray-400 text-slate-50 rounded-lg' onClick={onPrev}>Prev</button> : <button className='bg-gray-400 text-slate-50 rounded-lg' >Prev</button>}
+                <div className='flex justify-between text-skin-btn-text'>
+                    <button className='bg-skin-button-muted flex items-center justify-center px-4 py-3 border border-transparent font-medium rounded-md shadow-sm bg-opacity-60 hover:bg-opacity-70 sm:px-8' onClick={onPrev}>Prev</button>
 
-                    <button className='bg-gray-400 text-slate-50 rounded-lg' onClick={onNext}>Next</button>
+                    <button className='bg-skin-button-accent hover:bg-opacity-70 shadow-sm flex items-center justify-center px-4 py-3 border border-transparent font-medium rounded-md sm:px-8' onClick={onNext}>Next</button>
                 </div>
             </div>
-        </div>
     )
 }

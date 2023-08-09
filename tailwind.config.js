@@ -1,35 +1,37 @@
-/** @type {import('tailwindcss').Config} */
+function withOpacity(variableName) {
+  return ({ opacityValue }) => {
+    if (opacityValue !== undefined) {
+      return `rgba(var(${variableName}), ${opacityValue})`
+    }
+    return `rgb(var(${variableName}))`
+  }
+}
+
 module.exports = {
   content: [
-    './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/components/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/app/**/*.{js,ts,jsx,tsx,mdx}',
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
     extend: {
       colors: {
-        'primary': '#0D74E7',
-        'secondary': '#4F67EB',
-        'success': '#2FBB4F',
-        'error': '',
-        'bg': {
-          'l': '#FFFFFF',
-          'd': '#24292D'
-        },
-        'onbg': {
-          'l': '#F0F4FF',
-          'd': '#2B3137',
-        },
-        'textp': {
-          'l': '#24292D',
-          'd': '#FFFFFF'
-        },
-        'texts': {
-          'l': '#2B3137',
-          'd': '#FSFAFA'
+        primary: withOpacity('--color-primary'),
+        secondary: withOpacity('--color-secondary'),
+        success: withOpacity('--color-success'),
+        error: withOpacity('--color-error'),
+        base: withOpacity('--color-base'),
+        muted: withOpacity('--color-muted'),
+      },
+      backgroundColor: {
+        skin: {
+          fill: withOpacity('--color-fill'),
+          'on-fill': withOpacity('--color-on-fill'),
         },
       },
     },
+  },
+  variants: {
+    extend: {},
   },
   plugins: [],
 }

@@ -34,8 +34,8 @@ export const resultReducer = createSlice({
                 userId: "",
                 userName: "",
                 category: "",
-                set: 0,
-                result: []
+                set: "",
+                result: [],
             }
         }
     }

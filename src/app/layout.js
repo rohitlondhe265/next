@@ -20,15 +20,15 @@ export default function RootLayout({ children }) {
       <body>
         <ReduxProvider>
           <NextAuthProvider>
-            <div className='bg-bg-l dark:bg-bg-d text-textp-l dark:text-textp-d'>
-              <ThemeProvider>
+            <ThemeProvider>
+              <div className='bg-skin-fill text-base'>
                 <div className='container mx-auto'>
                   <Navbar />
-                  <main>{children}</main>
+                  <main className='px-3'>{children}</main>
                   <Footer />
                 </div>
-              </ThemeProvider>
-            </div>
+              </div>
+            </ThemeProvider>
           </NextAuthProvider>
         </ReduxProvider>
       </body>
