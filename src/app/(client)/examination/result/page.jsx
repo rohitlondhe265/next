@@ -15,20 +15,11 @@ export default function Result() {
     const dispatch = useDispatch()
     const { questions: { queue, answers }, result: { result, userId } } = useSelector(state => state)
 
-    console.log(result)
-    console.log(answers)
-    console.log(queue)
-
     const totalPoints = queue.length * 10;
     const attempts = attempts_Number(result);
     const earnPoints = earnPoints_Number(result, answers, 10)
     const flag = flagResult(totalPoints, earnPoints)
-
-    console.log(totalPoints)
-    console.log(attempts)
-    console.log(earnPoints)
-    console.log(flag)
-
+    
     /** store user result */
     // usePublishResult({
     //     result,

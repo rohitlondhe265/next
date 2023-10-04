@@ -3,15 +3,6 @@
 @tailwind utilities;
 
 @layer base {
-  :root {
-    --color-text-base: 255, 255, 255;
-    --color-text-muted: 199, 210, 254;
-    --color-text-inverted: 79, 70, 229;
-    --color-fill: 67, 56, 202;
-    --color-button-accent: 255, 255, 255;
-    --color-button-accent-hover: 238, 242, 255;
-    --color-button-muted: 99, 102, 241;
-  }
 
   .light {
     --color-base: 0,0,0;
@@ -39,23 +30,34 @@
     --color-error: 13, 116, 231;
   }
 
-  .theme-swiss {
-    --color-text-base: 255, 255, 255;
-    --color-text-muted: 254, 202, 202;
-    --color-text-inverted: 220, 38, 38;
-    --color-fill: 185, 28, 28;
-    --color-button-accent: 255, 255, 255;
-    --color-button-accent-hover: 254, 242, 242;
-    --color-button-muted: 239, 68, 68;
-  }
+}
+.animate-timer {
+  position: relative;
+   animation: animatetop 1s infinite;
+ }
+ @keyframes animatetop {
+   from {
+     top: -50px;
+   }
+   to {
+     top: 20px;
+   }
+ }
+/* Change the background color of the toolbar */
+.ql-toolbar {
+  background-color: #ff9900; /* Change this color as desired */
+  color: #000;
+}
+/* Change the color of the headings */
+.ql-snow h3 {
+  color: #ff9900; /* Change this color as desired */
+}
 
-  .theme-neon {
-    --color-text-base: 17, 24, 2;
-    --color-text-muted: 47, 67, 6;
-    --color-text-inverted: 235, 250, 204;
-    --color-fill: 179, 255, 23;
-    --color-button-accent: 36, 52, 3;
-    --color-button-accent-hover: 55, 79, 5;
-    --color-button-muted: 212, 255, 122;
-  }
+.ql-snow h4 {
+  color: #007bff; /* Change this color as desired */
+}
+
+/* Change the color of toolbar icons (buttons) */
+.ql-toolbar button {
+  color: #000; /* Change this color as desired */
 }
