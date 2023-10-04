@@ -1,49 +1,34 @@
 'use client'
+import Link from "next/link";
+import ThemeButton from "./ThemeButton";
+import { signIn } from "next-auth/react";
 
-import React, { useState } from 'react'
-import Button from './BtnPrimary';
-import { Bars3CenterLeftIcon, XMarkIcon } from '@heroicons/react/24/solid';
-import ThemeButton from './ThemeButton';
-
-export default function Navbar() {
-  const Links = [
-    { name: "HOME", link: "/" },
-    { name: "SERVICE", link: "/" },
-    { name: "ABOUT", link: "/" },
-    { name: "BLOG'S", link: "/" },
-    { name: "CONTACT", link: "/" },
-  ];
-  const [open, setOpen] = useState(false);
-
+export default async function Navbar() {
+  const session = "user";
   return (
-    <div className='shadow-md w-full mb-3'>
-      <div className='flex items-center justify-between lg:px-9 px-6 py-2 lg:py-3 bg-skin-on-fill'>
-
-        <div className='font-bold text-2xl cursor-pointer flex items-center '>
-          <span className='text-3xl text-indigo-600 mr-1 text-center'>
-            MAHA
-          </span>
-          Exams
+    <div className="fixed inset-x-0 top-0 bg-skin-on-fill z-[10] h-fit border-b border-base py-2 ">
+      <div className="flex items-center justify-between h-full gap-2 px-8 mx-auto max-w-7xl">
+        {/* Logo */}
+        <Link href={"/"} className="flex items-center gap-2">
+          <p className="rounded-lg border-2 border-b-4 border-r-4 border-base px-2 py-1 text-xl font-bold transition-all hover:-translate-y-[2px] md:block">
+            Quizmify
+          </p>
+        </Link>
+        <div className="flex items-center gap-3">
+          <ThemeButton/>
+          {session?.user ? (
+            <h3>User</h3>
+          ) : (
+            <button
+              onClick={() => {
+                signIn("google").catch(console.error);
+              }}
+            >
+              Sign
+            </button>
+          )}
         </div>
-
-        <ThemeButton />
-
-        <div onClick={() => setOpen(!open)} className='w-9 space-y-2 cursor-pointer lg:hidden'>
-          {open ? <XMarkIcon /> : <Bars3CenterLeftIcon />}
-        </div>
-
-        <ul className={`lg:flex lg:items-center lg:pb-0 pb-12 absolute lg:static h-fit left-0 w-full lg:w-auto lg:pl-0 pl-9 transition-all duration-500 ease-in bg-skin-on-fill ${open ? 'top-16 ' : 'top-[-490px]'}`}>
-          {
-            Links.map((link) => (
-              <li key={link.name} className='lg:ml-8 text-xl lg:my-0 my-7'>
-                <p href="/" className='duration-500'>{link.name}</p>
-              </li>
-            ))
-          }
-          <Button>Get Started</Button>
-        </ul>
-
       </div>
     </div>
-  )
+  );
 }

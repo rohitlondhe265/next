@@ -1,6 +1,5 @@
 import "./globals.css";
 import NextAuthProvider from "./providers";
-import ReduxProvider from "@/lib/redux/Provider";
 
 import ThemeProvider from "@/app/ThemeProvider";
 import Navbar from "@/components/Navbar";
@@ -15,19 +14,17 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body>
-        <ReduxProvider>
-          <NextAuthProvider>
-            <ThemeProvider>
-              <div className="bg-skin-fill text-base">
-                <div className="container mx-auto">
-                  <Navbar />
-                  <main className="px-3">{children}</main>
-                  <Footer />
-                </div>
+        <NextAuthProvider>
+          <ThemeProvider>
+            <div className="bg-skin-fill text-base">
+              <div className="container mx-auto">
+                <Navbar />
+                <main className="px-3">{children}</main>
+                <Footer />
               </div>
-            </ThemeProvider>
-          </NextAuthProvider>
-        </ReduxProvider>
+            </div>
+          </ThemeProvider>
+        </NextAuthProvider>
       </body>
     </html>
   );

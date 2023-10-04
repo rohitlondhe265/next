@@ -1,17 +1,9 @@
 "use client";
 
-import React, { useRef } from "react";
+import { useRef } from "react";
 import BtnPrimary from "@/components/BtnPrimary";
-
-import { useDispatch } from "react-redux";
-import {
-  setCategory,
-  setSet,
-  setUserId,
-  setUserName,
-} from "@/lib/redux/result_reducer";
 import { useSession } from "next-auth/react";
-import { SetTimer } from "@/lib/hooks/FetchQuestion";
+import useQuizStore from "@/store/quizStore";
 
 export default function Page() {
   const cat = ["Mpsc", "Upsc", "SSC"];
@@ -19,22 +11,13 @@ export default function Page() {
   const nameRef = useRef(null);
   const catRef = useRef(null);
   const setRef = useRef(null);
-  const dispatch = useDispatch();
+
   const email = useSession().data?.user?.email;
+  const startExamination = useQuizStore((state) => state.startExamination);
 
-  function startQuiz() {
-    if (
-      nameRef.current?.value &&
-      catRef.current?.value &&
-      setRef.current?.value
-    ) {
-      dispatch(setUserId(email));
-      dispatch(setUserName(nameRef.current?.value));
-      dispatch(setCategory(catRef.current?.value));
-      dispatch(setSet(setRef.current?.value));
-    }
-  }
-
+  const handleStartExam = () => {
+    startExamination(catRef, setRef, "email", 30);
+  };
   return (
     <div className="min-h-[33rem] flex flex-col items-center space-y-6 px-2 mt-9">
       <h1 className="text-4xl text-center md:text-5xl font-bold">
@@ -81,7 +64,7 @@ export default function Page() {
             ))}
           </select>
           <div className="mx-auto">
-            <BtnPrimary onClick={startQuiz} href="/examination/live">
+            <BtnPrimary onClick={handleStartExam} href="/examination/live">
               Start Exam
             </BtnPrimary>
           </div>

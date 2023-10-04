@@ -1,61 +1,86 @@
 "use client";
-
-import { useEffect } from "react";
-import { MoveNextQuestion, MovePrevQuestion } from "@/lib/hooks/FetchQuestion";
-
-import { useSelector, useDispatch } from "react-redux";
-import { useRouter } from "next/navigation";
-import Questions from "@/components/Questions";
-import Timer4 from "@/components/Time";
+import Timer from "@/components/Time";
+import useQuizStore from "@/store/quizStore";
+import { useEffect, useState } from "react";
 
 export default function Content() {
-  const router = useRouter();
+  const {
+    questions,
+    currentQuestionIndex,
+    statusArr,
+    clearSelectedOption,
+    selectOption,
+    nextQuestion,
+    previousQuestion,
+  } = useQuizStore();
 
-  const isSubmited = useSelector((state) => state.result.isSubmited);
-  const trace = useSelector((state) => state.questions.trace);
-  const dispatch = useDispatch();
+  const currentQuestion = questions[currentQuestionIndex];
 
-  function onNext() {
-    dispatch(MoveNextQuestion(true));
-  }
+  const handleOptionChange = (e) => {
+    selectOption(currentQuestionIndex, e.target.value);
+  };
 
-  function onPrev() {
-    if (trace > 0) {
-      dispatch(MovePrevQuestion());
-    }
-  }
+  const isAnswered = statusArr[currentQuestionIndex];
+  const handleClearOption = () => {
+    clearSelectedOption(currentQuestionIndex);
+  };
 
+  const [options, setOptions] = useState();
   useEffect(() => {
-    console.log(isSubmited);
-    if (isSubmited) {
-      return router.push("/examination/result");
-    }
-  }, [isSubmited]);
+    setOptions(
+      currentQuestion &&
+        handleShuffle([currentQuestion?.answer, ...currentQuestion?.options])
+    );
+  }, [currentQuestionIndex, currentQuestion]);
 
+  const handleShuffle = (options) => {
+    return options.sort(() => Math.random() - 0.5);
+  };
+
+  if (questions.length === 0) {
+    return <div>Loading questions...</div>;
+  }
   return (
     <div className="w-full h-full rounded border-dashed border-2 border-gray-300 p-2 md:p-6">
-      <main>
-        <div className="w-full flex justify-between uppercase">
-          <div>Section: 1_General Knoledge</div>
-          <Timer4 seconds={60 * 2} />
-        </div>
-        <Questions />
-      </main>
+      <div>
+        <h2>Question {currentQuestionIndex + 1}</h2>
+        <p>{currentQuestion.question}</p>
+        {options?.map((option) => (
+          <div key={option}>
+            <label>
+              <input
+                type="radio"
+                name="option"
+                value={option}
+                checked={currentQuestion.selectedOption === option}
+                onChange={handleOptionChange}
+              />
+              {option}
+            </label>
+          </div>
+        ))}
 
-      <div className="flex justify-between text-skin-btn-text">
+        <Timer />
         <button
-          className="bg-skin-button-muted flex items-center justify-center px-4 py-3 border border-transparent font-medium rounded-md shadow-sm bg-opacity-60 hover:bg-opacity-70 sm:px-8"
-          onClick={onPrev}
+          onClick={previousQuestion}
+          disabled={currentQuestionIndex === 0}
         >
-          Prev
+          Previous
         </button>
-
         <button
-          className="bg-skin-button-accent hover:bg-opacity-70 shadow-sm flex items-center justify-center px-4 py-3 border border-transparent font-medium rounded-md sm:px-8"
-          onClick={onNext}
+          onClick={nextQuestion}
+          disabled={currentQuestionIndex === questions.length - 1}
         >
           Next
         </button>
+        {isAnswered && (
+          <button
+            className="bg-red-500 text-white px-2 py-1 mt-2 rounded-md hover:bg-red-600 transition duration-300"
+            onClick={handleClearOption}
+          >
+            Clear Option
+          </button>
+        )}
       </div>
     </div>
   );

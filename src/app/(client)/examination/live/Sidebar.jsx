@@ -6,14 +6,11 @@ import {
   ChevronDoubleLeftIcon,
 } from "@heroicons/react/24/solid";
 import Board from "@/components/Board";
-import { useDispatch } from "react-redux";
-import { setSubmit } from "@/lib/redux/result_reducer";
 
 export default function Sidebar() {
   const [open, setOpen] = useState(false);
-  const dispatch = useDispatch();
   const handleSubmit = () => {
-    dispatch(setSubmit());
+    console.log("submit");
   };
   return (
     <div>

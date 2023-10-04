@@ -1,15 +1,10 @@
-import Sidebar from './Sidebar';
-import Content from './Content';
-import { Suspense } from 'react';
+"use client";
+import Exam from "./Exam";
+import Result from "./Result";
+import useQuizStore from "@/store/quizStore";
 
-export default function Page() {
-
-    return (
-        <div className="flex flex-no-wrap my-6 md:gap-6">
-            <Sidebar />
-            <Suspense fallback={<div>Loading questions ...</div>}>
-                <Content />
-            </Suspense>
-        </div>
-    )
+export default function page() {
+  const isQuizOver = useQuizStore((state) => state.isQuizOver);
+  const result = useQuizStore((state) => state.result);
+  return <div>{isQuizOver ? result && <Result /> : <Exam />}</div>;
 }
