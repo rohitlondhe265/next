@@ -6,17 +6,15 @@ import {
   ChevronDoubleLeftIcon,
 } from "@heroicons/react/24/solid";
 import Board from "@/components/Board";
+import SubmitExam from "@/components/SubmitExam";
 
 export default function Sidebar() {
   const [open, setOpen] = useState(false);
-  const handleSubmit = () => {
-    console.log("submit");
-  };
   return (
     <div>
-      <button onClick={handleSubmit}>Submit Exam</button>
       {/* Laptop sidebar */}
       <div className="w-72 bg-skin-on-fill shadow p-6 sm:block hidden">
+        <SubmitExam />
         <Board />
       </div>
 
@@ -35,6 +33,7 @@ export default function Sidebar() {
           {open ? <ChevronDoubleLeftIcon /> : <ChevronDoubleRightIcon />}
         </div>
         <div className="p-3">
+          <SubmitExam />
           <Board />
         </div>
       </div>

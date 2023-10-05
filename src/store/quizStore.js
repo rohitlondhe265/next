@@ -41,8 +41,6 @@ const useQuizStore = create((set) => ({
   statusArr: [],
   currentQuestionIndex: 0,
   timer: 0,
-  isQuizOver: false,
-  result: null,
 
   startExamination: (categoryId, selectedSet, email, timer) => {
     try {
@@ -59,29 +57,10 @@ const useQuizStore = create((set) => ({
         statusArr,
         currentQuestionIndex: 0,
         timer,
-        isQuizOver: false,
-        result: null,
       });
-      const state = useQuizStore.getState();
-      state.startTimer();
     } catch (error) {
       console.error("Error fetching questions:", error);
     }
-  },
-
-  startTimer: () => {
-    const state = useQuizStore.getState();
-    let timer = state.timer;
-    const timerInterval = setInterval(() => {
-      timer -= 1;
-      set({ timer });
-    }, 1000);
-
-    // Calculate the quiz result when the timer expires
-    setTimeout(() => {
-      clearInterval(timerInterval);
-      state.calculateResult();
-    }, state.timer * 1000);
   },
 
   selectOption: (questionIndex, selectedOption) => {
@@ -117,31 +96,7 @@ const useQuizStore = create((set) => ({
     set((state) => ({ currentQuestionIndex: state.currentQuestionIndex - 1 }));
   },
 
-  calculateResult: () => {
-    set((state) => {
-      const answers = state.questions.map((question, index) => ({
-        question: question.question,
-        selectedOption: question.selectedOption,
-        correctAnswer: question.answer,
-        isCorrect: question.answer === question.selectedOption,
-      }));
-
-      const score = answers.filter((answer) => answer.isCorrect).length;
-      const percentage = (score / state.questions.length) * 100;
-
-      const result = {
-        score,
-        percentage,
-        answers,
-        totalQuestions: state.questions.length,
-      };
-
-      set({ result, isQuizOver: true });
-
-      return result;
-    });
-  },
-  resetQuizStore: () => {
+  resetQuiz: () => {
     set({
       userEmail: "",
       categoryId: "",
@@ -150,8 +105,6 @@ const useQuizStore = create((set) => ({
       statusArr: [],
       currentQuestionIndex: 0,
       timer: 0,
-      isQuizOver: false,
-      result: null,
     });
   },
 }));

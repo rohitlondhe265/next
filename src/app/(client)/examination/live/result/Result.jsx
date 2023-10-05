@@ -3,11 +3,15 @@
 import ResultTable from "@/components/ResultTable";
 import BtnPrimary from "@/components/BtnPrimary";
 import useQuizStore from "@/store/quizStore";
+import { useRouter } from "next/navigation";
+import useResultStore from "@/store/resultStore";
 
 export default function Result() {
-  const result = useQuizStore((state) => state.result);
+  const router = useRouter();
   const userEmail = useQuizStore((state) => state.userEmail);
-  const resetQuizStore = useQuizStore((state) => state.resetQuizStore);
+  const { score, percentage, totalQuestions, attemptedQuestions } =
+    useResultStore();
+
   return (
     <div className="relative mx-auto max-w-3xl min-h-screen">
       {/* <h1 className="text-5xl p-4 text-center font-bold from-purple-600 via-pink-600 to-blue-600 bg-gradient-to-r bg-clip-text text-transparent">A Guide to Adding Gradients</h1> */}
@@ -22,25 +26,19 @@ export default function Result() {
         </div>
         <div className="flex justify-between">
           <span>Total Examination Points : </span>
-          <span className="bold">{result.score}</span>
+          <span className="bold">{totalQuestions}</span>
         </div>
         <div className="flex justify-between">
           <span>Total Questions Attempted : </span>
-          <span className="bold">{result.score}</span>
+          <span className="bold">{attemptedQuestions}</span>
         </div>
         <div className="flex justify-between">
           <span>Marks Obtained : </span>
-          <span className="bold">{result.score}</span>
+          <span className="bold">{score}</span>
         </div>
         <div className="flex justify-between">
           <span>Percentage : </span>
-          <span className="bold">{result.percentage}</span>
-        </div>
-
-        <div className="mt-6 mx-auto">
-          <BtnPrimary href="/examination" onClick={resetQuizStore}>
-            Restart
-          </BtnPrimary>
+          <span className="bold">{percentage}</span>
         </div>
       </div>
 

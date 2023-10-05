@@ -1,6 +1,9 @@
 "use client";
-import Timer from "@/components/Time";
+import { calculateResult } from "@/store/helpers";
+import Timer from "./Timer";
 import useQuizStore from "@/store/quizStore";
+import useResultStore from "@/store/resultStore";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function Content() {
@@ -13,7 +16,34 @@ export default function Content() {
     nextQuestion,
     previousQuestion,
   } = useQuizStore();
+  const router = useRouter();
+  const isQuizOver = useResultStore((state) => state.isQuizOver);
+  const setResult = useResultStore((state) => state.setResult);
 
+  const handleSubmit = () => {
+    const result = calculateResult(questions, statusArr);
+    const newScore = result.score;
+    const newPercentage = result.percentage;
+    const newTotalQuestions = result.totalQuestions;
+    const newAttemptedQuestions = result.attemptedQuestions;
+    const newAnswers = result.answers;
+    const newIsQuizOver = true;
+    setResult(
+      newScore,
+      newPercentage,
+      newTotalQuestions,
+      newAttemptedQuestions,
+      newAnswers,
+      newIsQuizOver
+    );
+    console.log(result);
+    router.push("/examination/live/result");
+  };
+  useEffect(() => {
+    if (isQuizOver) {
+      handleSubmit();
+    }
+  }, [isQuizOver]);
   const currentQuestion = questions[currentQuestionIndex];
 
   const handleOptionChange = (e) => {

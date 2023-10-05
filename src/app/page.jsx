@@ -1,8 +1,9 @@
+import React from 'react'
 
 export default function page() {
   return (
     <div>
-      Hii
+      Home
     </div>
   )
 }

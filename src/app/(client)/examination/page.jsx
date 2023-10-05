@@ -16,7 +16,7 @@ export default function Page() {
   const startExamination = useQuizStore((state) => state.startExamination);
 
   const handleStartExam = () => {
-    startExamination(catRef, setRef, "email", 30);
+    startExamination("catRef", "setRef", "User email", 30);
   };
   return (
     <div className="min-h-[33rem] flex flex-col items-center space-y-6 px-2 mt-9">
