@@ -1,7 +1,6 @@
-import React from "react";
 import AddQuestion from "./AddQuestion";
 
-export default function page() {
+export default function Page() {
   return (
     <div>
       <AddQuestion />

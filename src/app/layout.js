@@ -1,5 +1,5 @@
 import "./globals.css";
-import NextAuthProvider from "./providers";
+import NextAuthProvider from "./NextAuthProvider";
 
 import ThemeProvider from "@/app/ThemeProvider";
 import Navbar from "@/components/Navbar";
