@@ -3,11 +3,10 @@
 import ResultTable from "@/components/ResultTable";
 import BtnPrimary from "@/components/BtnPrimary";
 import useQuizStore from "@/store/quizStore";
-import { useRouter } from "next/navigation";
 import useResultStore from "@/store/resultStore";
+import { resetAll } from "@/store/actions";
 
 export default function Result() {
-  const router = useRouter();
   const userEmail = useQuizStore((state) => state.userEmail);
   const { score, percentage, totalQuestions, attemptedQuestions } =
     useResultStore();
@@ -43,6 +42,9 @@ export default function Result() {
       </div>
 
       <div className="my-9">
+        <BtnPrimary href={"/examination"} onClick={resetAll}>
+          Reset All
+        </BtnPrimary>
         <ResultTable></ResultTable>
       </div>
     </div>

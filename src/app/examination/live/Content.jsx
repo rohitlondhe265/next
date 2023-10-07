@@ -1,5 +1,5 @@
 "use client";
-import { calculateResult } from "@/store/helpers";
+import { submitExam } from "@/store/actions";
 import Timer from "./Timer";
 import useQuizStore from "@/store/quizStore";
 import useResultStore from "@/store/resultStore";
@@ -18,26 +18,9 @@ export default function Content() {
   } = useQuizStore();
   const router = useRouter();
   const isQuizOver = useResultStore((state) => state.isQuizOver);
-  const setResult = useResultStore((state) => state.setResult);
 
-  const handleSubmit = () => {
-    const result = calculateResult(questions, statusArr);
-    const newScore = result.score;
-    const newPercentage = result.percentage;
-    const newTotalQuestions = result.totalQuestions;
-    const newAttemptedQuestions = result.attemptedQuestions;
-    const newAnswers = result.answers;
-    const newIsQuizOver = true;
-    setResult(
-      newScore,
-      newPercentage,
-      newTotalQuestions,
-      newAttemptedQuestions,
-      newAnswers,
-      newIsQuizOver
-    );
-    console.log(result);
-    router.push("/examination/live/result");
+ const handleSubmit = () => {
+    submitExam(router);
   };
   useEffect(() => {
     if (isQuizOver) {

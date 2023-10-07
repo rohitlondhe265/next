@@ -1,6 +1,7 @@
 import { create } from "zustand";
+import { devtools } from "zustand/middleware";
 
-const useResultStore = create((set) => ({
+const resultStore = (set) => ({
   score: 0,
   percentage: 0,
   totalQuestions: 0,
@@ -8,7 +9,6 @@ const useResultStore = create((set) => ({
   answers: [],
   isQuizOver: false,
 
-  // Define setResult action to update the result state
   setResult: (
     newScore,
     newPercentage,
@@ -26,16 +26,13 @@ const useResultStore = create((set) => ({
       isQuizOver: newIsQuizOver,
     });
   },
-  resetResult: () => {
-    set({
-      score: 0,
-      percentage: 0,
-      totalQuestions: 0,
-      attemptedQuestions: 0,
-      answers: [],
-      isQuizOver: false,
-    });
-  },
-}));
 
+  deleteEverything: () => set({}, true),
+});
+
+const useResultStore = create(
+  devtools(resultStore, {
+    name: "Result",
+  })
+);
 export default useResultStore;

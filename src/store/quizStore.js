@@ -1,39 +1,8 @@
+import axios from "axios";
 import { create } from "zustand";
+import { devtools } from "zustand/middleware";
 
-const sampleQuestions = [
-  {
-    question: "What is the capital of France?",
-    options: ["London", "Berlin", "Madrid"],
-    answer: "Paris",
-  },
-  {
-    question: "Which planet is known as the Red Planet?",
-    options: ["Venus", "Jupiter", "Mercury"],
-    answer: "Mars",
-  },
-  {
-    question: "What is the largest mammal?",
-    options: ["Elephant", "Giraffe", "Kangaroo"],
-    answer: "Whale",
-  },
-  {
-    question: "What is the capital of France?",
-    options: ["London", "Berlin", "Madrid"],
-    answer: "Paris",
-  },
-  {
-    question: "Which planet is known as the Red Planet?",
-    options: ["Venus", "Jupiter", "Mercury"],
-    answer: "Mars",
-  },
-  {
-    question: "What is the largest mammal?",
-    options: ["Elephant", "Giraffe", "Kangaroo"],
-    answer: "Whale",
-  },
-];
-
-const useQuizStore = create((set) => ({
+const quizStore = (set) => ({
   userEmail: "",
   categoryId: "",
   set: "",
@@ -42,18 +11,19 @@ const useQuizStore = create((set) => ({
   currentQuestionIndex: 0,
   timer: 0,
 
-  startExamination: (categoryId, selectedSet, email, timer) => {
+  startExamination: async (categoryId, selectedSet, email, timer) => {
     try {
-      // const response = await axios.get(`/api/questions?categoryId=${categoryId}&set=${set}`);
-      // const fetchedQuestions = response.data;
-      // const statusArr = new Array(fetchedQuestions.length).fill(false);
-      const statusArr = new Array(sampleQuestions.length).fill(false);
-
+      const response = await axios.get(
+        `http://localhost:8000/api/question/${categoryId}/${selectedSet}`
+      );
+      const fetchedQuestions = await response.data;
+      const statusArr = new Array(fetchedQuestions.length).fill(false);
+      // const statusArr = new Array(sampleQuestions.length).fill(false);
       set({
         userEmail: email,
         categoryId,
         set: selectedSet,
-        questions: sampleQuestions,
+        questions: fetchedQuestions,
         statusArr,
         currentQuestionIndex: 0,
         timer,
@@ -107,6 +77,13 @@ const useQuizStore = create((set) => ({
       timer: 0,
     });
   },
-}));
 
+  deleteEverything: () => set({}, true),
+});
+
+const useQuizStore = create(
+  devtools(quizStore, {
+    name: "ExamStore",
+  })
+);
 export default useQuizStore;
